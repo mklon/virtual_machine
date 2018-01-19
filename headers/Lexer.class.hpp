@@ -10,7 +10,9 @@ private:
         LexerExp( LexerExp const & rhs );
 
         LexerExp &	operator=( LexerExp const & rhs );
-        ~LexerExp();
+
+        virtual const   char *what() const throw();
+        virtual ~LexerExp() throw();
     };
 public:
 	Lexer();
