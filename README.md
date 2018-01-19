@@ -30,8 +30,5 @@ languages.
 ## Compile
 Just execute the `make` command to launch the compilation.
 
-## Tests
-Some tests are provided, run `make tests` and magic happens.
-
 ## About
 Abstract-VM is a 42 school project.
