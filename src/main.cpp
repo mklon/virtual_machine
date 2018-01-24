@@ -1,12 +1,13 @@
 #include <iostream>
 #include "../headers/Lexer.class.hpp"
 
-int		main( int atgc, char* argv[] ) {
+int		main( int argc, char* argv[] ) {
     try {
-
+		Lexer	lexer( argc, argv);
+        lexer.begin();
     }
-    catch () {
-
+    catch ( std::exception & e ) {
+        std::cout << e.what() << std::endl;
     }
 	return 0;
 }
