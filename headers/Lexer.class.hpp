@@ -5,6 +5,28 @@
 #include <fstream>
 #include <string>
 
+enum    token {
+    INT8,
+    INT16,
+    INT3,
+    FLOAT,
+    DOUBLE,
+    POP,
+    DUMP,
+    ASSERT,
+    ADD,
+    SUB,
+    MUL,
+    DIV,
+    MOD,
+    PRINT,
+    EXIT
+};
+
+typedef struct  lexeme {
+
+};
+
 class Lexer {
 private:
     class LexerExp : public std::exception {
