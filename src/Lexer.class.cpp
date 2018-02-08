@@ -23,8 +23,8 @@ Lexer           &Lexer::operator=( Lexer const &rhs ) {
     return (*this);
 }
 
-void            Lexer::begin() {
-
+void            Lexer::exception( std::string line ) {
+    throw ( LexerExp( line ));
 }
 
 std::string     Lexer::erase(std::string line) {

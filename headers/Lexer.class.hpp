@@ -8,7 +8,7 @@
 enum    token {
     INT8,
     INT16,
-    INT3,
+    INT32,
     FLOAT,
     DOUBLE,
     POP,
@@ -23,8 +23,9 @@ enum    token {
     EXIT
 };
 
-typedef struct  lexeme {
-
+struct  lexeme {
+	token		cmd;
+	std::string	value;
 };
 
 class Lexer {
@@ -52,7 +53,7 @@ public:
 	Lexer( int argc, char *argv[] );
 	Lexer &	operator=( Lexer const & rhs );
 
-    void        begin();
+    void        exception( std::string line );
     std::string erase( std::string line );
 
 	~Lexer();

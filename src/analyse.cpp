@@ -1,8 +1,11 @@
 #include "../headers/includes.hpp"
 
-void    create_lexeme( std::string line ) {
-    //std::cout << line << "|" << std::endl;
-
+void    create_lexeme( std::string line, Lexer &lexer ) {
+	unsigned long int	i;
+	if (( i = line.find( "push" )) != std::string::npos ) {
+		if ( i != 0 )
+			lexer.exception("unknow cmd!");
+	}
 }
 
 int     begin( Lexer &lexer ) {
@@ -14,9 +17,9 @@ int     begin( Lexer &lexer ) {
     }
     else
         while ( line != "end" ) {
-            std::getline( std::cin, line );
-            line = lexer.erase( line );
-            create_lexeme( line );
-        }
+			std::getline( std::cin, line );
+			line = lexer.erase( line );
+			create_lexeme( line, lexer );
+		}
     return ( 0 );
 }
