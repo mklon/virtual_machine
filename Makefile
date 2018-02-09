@@ -4,6 +4,7 @@ NAME = avm
 SOURCE =    src/main.cpp \
             src/Lexer.class.cpp \
             src/analyse.cpp \
+            src/lexeme.cpp \
 
 OBJECTS = $(SOURCE:.cpp=.o)
 
