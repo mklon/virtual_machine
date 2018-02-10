@@ -41,6 +41,9 @@ std::ifstream   *Lexer::get_file() {
     return ( _file );
 }
 
+std::list<lexeme>   &Lexer::get_list() {
+    return ( _lexemesList );
+}
 
 Lexer::~Lexer() {}
 

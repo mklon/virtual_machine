@@ -1,3 +1,6 @@
+#ifndef INCLUDES_HPP
+# define INCLUDES_HPP
+
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -19,3 +22,4 @@ std::list<std::string>	split_string( std::string line );
 void    create_lexeme( std::list<std::string> substr, Lexer &lexer );
 
 
+#endif

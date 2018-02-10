@@ -4,13 +4,19 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <list>
+
+enum	type {
+	INT8,
+	INT16,
+	INT32,
+	FLOAT,
+	DOUBLE,
+	NON
+};
 
 enum    token {
-    INT8,
-    INT16,
-    INT32,
-    FLOAT,
-    DOUBLE,
+    PUSH,
     POP,
     DUMP,
     ASSERT,
@@ -25,6 +31,7 @@ enum    token {
 
 struct  lexeme {
 	token		cmd;
+	type 		data_type;
 	std::string	value;
 };
 
@@ -43,14 +50,16 @@ private:
         virtual const   char *what() const throw();
         virtual ~LexerExp() throw();
     };
-    std::ifstream   *_file;
+    std::ifstream       *_file;
+    std::list<lexeme>   _lexemesList;
 public:
 	Lexer();
 	Lexer( Lexer const & rhs );
 
-	std::ifstream	*get_file();
+	std::ifstream	    *get_file();
+    std::list<lexeme>   &get_list();
 
-	Lexer( int argc, char *argv[] );
+    Lexer( int argc, char *argv[] );
 	Lexer &	operator=( Lexer const & rhs );
 
     void        exception( std::string line );
