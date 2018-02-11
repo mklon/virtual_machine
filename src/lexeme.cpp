@@ -1,16 +1,22 @@
 #include "../headers/includes.hpp"
 
-void	value( std::string &line, Lexer &lexer, type l_type ) {
+std::string	value( std::string &line, Lexer &lexer, type l_type ) {
 	if ( line[0] != '(' || line[line.size() - 1] != ')')
 		lexer.exception( "Invalid command!" );
 	line.erase( 0, 1);
 	line.erase( line.size() - 1, 1);
-	if ( line.find_first_not_of( "0123456789" ) != std::string::npos )
+	if ( line.find_first_not_of( "+-.0123456789" ) != std::string::npos )
 		lexer.exception( "Invalid value!" );
-	
+	if ( l_type == INT8 || l_type == INT16 || l_type == INT32 )
+		if ( line.find( '.' ) != std::string::npos )
+			lexer.exception( "Invalid value!" );
+	if ( line.find( '+', 1 ) != std::string::npos ||
+		 line.find( '-', 1 ) != std::string::npos )
+		lexer.exception( "Invalid value!" );
+	return ( line );
 }
 
-type	data_type( std::string &data, Lexer &lexer ) {
+type		data_type( std::string &data, Lexer &lexer ) {
 	if ( !data.compare( 0, 5, "int8(" )) {
 		data.erase( 0, 4 );
 		return ( INT8 );
@@ -36,7 +42,7 @@ type	data_type( std::string &data, Lexer &lexer ) {
 	return ( NON );
 }
 
-void    create_lexeme( std::list<std::string> substr, Lexer &lexer ) {
+void		create_lexeme( std::list<std::string> substr, Lexer &lexer ) {
 	std::string	line;
 
 	line = substr.front();
@@ -53,7 +59,7 @@ void    create_lexeme( std::list<std::string> substr, Lexer &lexer ) {
 			lexer.exception( "Invalid command" );
 		line = substr.front();
 		lex->data_type = data_type( line, lexer );
-		value( line , lexer, NON );
+		lex->value = value( line , lexer, lex->data_type );
 	}
 	else if ( substr.size() == 1 ) {
 		if ( line == "pop") {
@@ -85,6 +91,10 @@ void    create_lexeme( std::list<std::string> substr, Lexer &lexer ) {
 		}
 		else
 			lexer.exception( "Invalid command" );
+	}
+	else if (  substr.size() == 0 ) {
+		delete lex;
+		return ;
 	}
 	else
 		lexer.exception( "Invalid command" );

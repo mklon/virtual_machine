@@ -32,8 +32,10 @@ void	file( Lexer &lexer ) {
 
 void	std_input( Lexer &lexer ) {
 	std::string line;
-	while ( line != ";;" ) {
+	while ( true) {
 		std::getline( std::cin, line );
+		if ( line == ";;" )
+			break ;
 		create_lexeme( split_string( line ), lexer);
 	}
 }
