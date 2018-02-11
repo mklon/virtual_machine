@@ -6,9 +6,9 @@ Lexer::Lexer( int argc, char **argv ) {
     if ( argc > 2 )
         throw ( LexerExp( "Lexer: too many arguments!" ));
     else if ( argc == 2 ) {
-        this->_file->open(argv[1], std::ios_base::in);
-        if ( !_file->is_open() )
-            throw ( LexerExp( "Lexer: invalid file!" ));
+		this->_file->open(argv[1], std::ios_base::in);
+		if ( !_file->is_open() )
+			throw ( LexerExp( "Lexer: invalid file!" ));
     }
     else
         this->_file = NULL;
@@ -42,14 +42,7 @@ std::list<lexeme>	&Lexer::get_list() {
 Lexer::~Lexer() {}
 
 
-
-
-
-
-
-
 // LexerExp
-
 Lexer::LexerExp::LexerExp() {}
 
 
