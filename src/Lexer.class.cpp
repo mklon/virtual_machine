@@ -18,37 +18,28 @@ Lexer::Lexer( Lexer const &rhs ) {
     *this = rhs;
 }
 
-Lexer           &Lexer::operator=( Lexer const &rhs ) {
+Lexer				&Lexer::operator=( Lexer const &rhs ) {
 
     return (*this);
 }
 
-void            Lexer::exception( std::string line ) {
+void				Lexer::exception( std::string line ) {
     throw ( LexerExp( line ));
 }
 
-std::string     Lexer::erase(std::string line) {
-    unsigned long int   i;
-    while (( i = line.find(' ') ) <= line.size() )
-        line.erase( i, 1 );
-    while (( i = line.find('\t') ) <= line.size() )
-        line.erase( i, 1 );
-    return ( line );
+void				Lexer::add_lexeme( lexeme &new_lex ) {
+	this->_lexemesList.push_back( new_lex );
 }
 
-
-std::ifstream   *Lexer::get_file() {
+std::ifstream		*Lexer::get_file() {
     return ( _file );
 }
 
-std::list<lexeme>   &Lexer::get_list() {
+std::list<lexeme>	&Lexer::get_list() {
     return ( _lexemesList );
 }
 
 Lexer::~Lexer() {}
-
-
-
 
 
 

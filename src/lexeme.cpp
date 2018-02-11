@@ -1,6 +1,12 @@
 #include "../headers/includes.hpp"
 
-void	value( std::string &data, Lexer &lexerm, type l_type ) {
+void	value( std::string &line, Lexer &lexer, type l_type ) {
+	if ( line[0] != '(' || line[line.size() - 1] != ')')
+		lexer.exception( "Invalid command!" );
+	line.erase( 0, 1);
+	line.erase( line.size() - 1, 1);
+	if ( line.find_first_not_of( "0123456789" ) != std::string::npos )
+		lexer.exception( "Invalid value!" );
 	
 }
 
@@ -44,14 +50,43 @@ void    create_lexeme( std::list<std::string> substr, Lexer &lexer ) {
 			lex->cmd = ASSERT;
 		}
 		else
-			lexer.exception( "Unknown command" );
+			lexer.exception( "Invalid command" );
 		line = substr.front();
 		lex->data_type = data_type( line, lexer );
-		std::cout << line << "\n";
+		value( line , lexer, NON );
 	}
 	else if ( substr.size() == 1 ) {
-
+		if ( line == "pop") {
+			lex->cmd = POP;
+		}
+		else if ( line == "dump") {
+			lex->cmd = DUMP;
+		}
+		else if ( line == "add" ) {
+			lex->cmd = ADD;
+		}
+		else if ( line == "sub" ) {
+			lex->cmd = SUB;
+		}
+		else if ( line == "mul" ) {
+			lex->cmd = MUL;
+		}
+		else if ( line == "div" ) {
+			lex->cmd = DIV;
+		}
+		else if ( line == "mod" ) {
+			lex->cmd = MOD;
+		}
+		else if ( line == "print" ) {
+			lex->cmd = PRINT;
+		}
+		else if ( line == "exit" ) {
+			lex->cmd = EXIT;
+		}
+		else
+			lexer.exception( "Invalid command" );
 	}
 	else
-		lexer.exception( "Unknown command" );
+		lexer.exception( "Invalid command" );
+	lexer.add_lexeme( *lex );
 }

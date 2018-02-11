@@ -62,8 +62,8 @@ public:
     Lexer( int argc, char *argv[] );
 	Lexer &	operator=( Lexer const & rhs );
 
-    void        exception( std::string line );
-    std::string erase( std::string line );
+    void		exception( std::string line );
+	void		add_lexeme( lexeme &new_lex );
 
 	~Lexer();
 };
