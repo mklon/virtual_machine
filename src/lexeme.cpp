@@ -11,8 +11,13 @@ std::string	value( std::string &line, Lexer &lexer, type l_type ) {
 		if ( line.find( '.' ) != std::string::npos )
 			lexer.exception( "Invalid value!" );
 	if ( line.find( '+', 1 ) != std::string::npos ||
-		 line.find( '-', 1 ) != std::string::npos )
+		 line.find( '-', 1 ) != std::string::npos ||
+         line[0] == '.')
 		lexer.exception( "Invalid value!" );
+    if ( l_type == FLOAT || l_type == DOUBLE )
+        if ( line.find('.') != std::string::npos &&
+            line.find('.') != std::string::npos)
+            lexer.exception( "Invalid value!" );
 	return ( line );
 }
 

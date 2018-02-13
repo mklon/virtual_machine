@@ -41,9 +41,9 @@ void	std_input( Lexer &lexer ) {
 
 int     begin( Lexer &lexer ) {
 
-    if ( lexer.get_file() )
+	if ( lexer.get_file() )
 		file( lexer );
-    else
-        std_input( lexer );
-    return ( 0 );
+	else
+		std_input( lexer );
+	return ( 0 );
 }
