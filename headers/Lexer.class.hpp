@@ -7,15 +7,16 @@
 #include <list>
 
 enum	type {
-	INT8,
+    NON = 0,
+    INT8,
 	INT16,
 	INT32,
 	FLOAT,
 	DOUBLE,
-	NON
 };
 
 enum    token {
+    EXIT = 0,
     PUSH,
     POP,
     DUMP,
@@ -25,8 +26,7 @@ enum    token {
     MUL,
     DIV,
     MOD,
-    PRINT,
-    EXIT
+    PRINT
 };
 
 struct  lexeme {

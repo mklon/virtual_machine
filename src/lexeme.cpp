@@ -45,6 +45,8 @@ type		data_type( std::string &data, Lexer &lexer ) {
 void		create_lexeme( std::list<std::string> substr, Lexer &lexer ) {
 	std::string	line;
 
+    if ( substr.empty() )
+        return ;
 	line = substr.front();
 	lexeme	*lex = new lexeme;
 	if ( substr.size() == 2 ) {
@@ -62,6 +64,8 @@ void		create_lexeme( std::list<std::string> substr, Lexer &lexer ) {
 		lex->value = value( line , lexer, lex->data_type );
 	}
 	else if ( substr.size() == 1 ) {
+        lex->data_type = NON;
+        lex->value = "";
 		if ( line == "pop") {
 			lex->cmd = POP;
 		}
