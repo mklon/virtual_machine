@@ -7,8 +7,8 @@
 #include <sstream>
 #include "../headers/Lexer.class.hpp"
 #include <list>
-#include <limits.h>
-#include <float.h>
+#include <climits>
+#include <cfloat>
 
 
 //  main.cpp

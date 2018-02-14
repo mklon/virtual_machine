@@ -1,7 +1,7 @@
 #ifndef OPERAND_HPP
 # define OPERAND_HPP
 
-#include "IOperand.hpp"
+#include "IOperand.class.hpp"
 #include "includes.hpp"
 #include <iomanip>
 
