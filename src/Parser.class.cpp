@@ -12,7 +12,7 @@ void Parser::start() {
 	while ( !_lexemesList.empty() ) {
         if ( _lexemesList.front().cmd == EXIT )
             return ;
-        
+
 	}
 	throw ParserExp("The program doesn’t have an exit instruction!");
 }
