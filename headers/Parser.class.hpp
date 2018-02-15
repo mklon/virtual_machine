@@ -1,13 +1,14 @@
-#ifndef PARSER_HPP
-# define PARSER_HPP
+#ifndef PARSER_CLASS_HPP
+# define PARSER_CLASS_HPP
 
 #include "includes.hpp"
 #include "IOperand.class.hpp"
 
 class   Parser {
 private:
-	std::list<IOperand*>	_stack;
-	std::list<lexeme>		_lexemesList;
+	std::list<IOperand*>	            _stack;
+	std::list<lexeme>		            _lexemesList;
+	std::map<int, void (Parser::*)()>   _command;
 
 	class ParserExp : public std::exception {
 	private:
@@ -25,9 +26,20 @@ private:
 public:
 	Parser();
 	Parser( Parser const & rhs );
-    Parser( std::list<lexeme> lexeme );
+	Parser( std::list<lexeme> lexeme );
 
 	void    start();
+
+    void    push();
+    void    pop();
+    void    dump();
+    void    assert();
+    void    add();
+    void    sub();
+    void    mul();
+    void    div();
+    void    mod();
+    void    print();
 
 	Parser  &operator=( Parser const & rhs );
 	~Parser();

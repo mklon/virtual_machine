@@ -35,7 +35,7 @@ struct  lexeme {
 	std::string	value;
 };
 
-class Lexer {
+class   Lexer {
 private:
     class LexerExp : public std::exception {
     private:

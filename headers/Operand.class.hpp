@@ -1,5 +1,5 @@
-#ifndef OPERAND_HPP
-# define OPERAND_HPP
+#ifndef OPERAND_CLASS_HPP
+# define OPERAND_CLASS_HPP
 
 #include "IOperand.class.hpp"
 #include "includes.hpp"
@@ -29,7 +29,6 @@ private:
         };
         virtual ~OperandExp() throw() {};
     };
-
 public:
 	Operand() {};
 	Operand( Operand const &rhs ) {};
@@ -54,6 +53,41 @@ public:
         this->_line = stream.str();
 	}
 
+    int Operand::getPrecision() const {
+        return ( this->_precision );
+    }
+
+    type Operand::getType() const {
+        return ( this->_type );
+    }
+
+    std::string const& Operand::toString() const {
+        return ( this->_line );
+    }
+
+    IOperand const* Operand::operator+(IOperand const &rhs) const {
+
+    }
+
+    IOperand const* Operand::operator-(IOperand const &rhs) const {
+
+    }
+
+    IOperand const* Operand::operator*(IOperand const &rhs) const {
+
+    }
+
+    IOperand const* Operand::operator/(IOperand const &rhs) const {
+
+    }
+
+    IOperand const* Operand::operator%(IOperand const &rhs) const {
+
+    }
+
+    IOperand const * createOperand( type t, std::string const & value ) const {
+
+    }
 
     template <typename T>
     bool    is_size_ok() {
@@ -81,3 +115,7 @@ public:
 };
 
 #endif
+
+
+
+

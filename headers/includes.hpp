@@ -7,6 +7,7 @@
 #include <sstream>
 #include "../headers/Lexer.class.hpp"
 #include <list>
+#include <map>
 #include <climits>
 #include <cfloat>
 
@@ -21,7 +22,9 @@ void					file( Lexer &lexer );
 std::list<std::string>	split_string( std::string line );
 
 // lexeme.cpp
-void    create_lexeme( std::list<std::string> substr, Lexer &lexer );
+void                    create_lexeme( std::list<std::string> substr, Lexer &lexer );
+type		            data_type( std::string &data, Lexer &lexer );
+std::string             value( std::string &line, Lexer &lexer, type l_type );
 
 
 #endif

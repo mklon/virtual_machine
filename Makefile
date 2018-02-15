@@ -5,6 +5,8 @@ SOURCE =    src/main.cpp \
             src/Lexer.class.cpp \
             src/analyse.cpp \
             src/lexeme.cpp \
+            src/Parser.class.cpp \
+            src/Factory.class.cpp \
 
 OBJECTS = $(SOURCE:.cpp=.o)
 

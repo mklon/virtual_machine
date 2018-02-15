@@ -1,9 +1,9 @@
-#ifndef IOPERAND_HPP
-# define IOPERAND_HPP
+#ifndef IOPERAND_CLASS_HPP
+# define IOPERAND_CLASS_HPP
 
 #include "includes.hpp"
 
-class IOperand {
+class	IOperand {
 
 public:
 	virtual int					getPrecision( void ) const = 0; // Precision of the type of the instance
