@@ -13,6 +13,7 @@ private:
 	int         _precision;
 	T           _value;
 	std::string _line;
+    Factory     factory;
 
 
     class OperandExp : public std::exception {
@@ -67,23 +68,138 @@ public:
     }
 
     IOperand const* operator+(IOperand const &rhs) const {
+        type    type = ( this->_type > rhs.getType() )
+                       ? this->_type : rhs.getType();
+        int     prec = ( this->_precision > rhs.getPrecision() )
+                       ? this->_precision : rhs.getPrecision();
+        std::stringstream   stream;
+
+        if (_type <= INT32) {
+            long long   data = std::stoll( this->_line )
+                               + std::stoll( rhs.toString() );
+            if ( !is_size_ok( data ) )
+                throw OperandExp("Overflow!");
+            _value = static_cast<T>( data );
+            stream << std::setprecision( this->_precision ) << data;
+        }
+        else {
+            long double  data = std::stoll( this->_line )
+                                + std::stoll( rhs.toString() );
+            if ( !is_size_ok( data ) )
+                throw OperandExp("Overflow!");
+            _value = static_cast<T>( data );
+            stream << std::setprecision( this->_precision ) << data;
+        }
+        return ( factory.createOperand( type, stream.str() ));
 
     }
 
     IOperand const* operator-(IOperand const &rhs) const {
+        type    type = ( this->_type > rhs.getType() )
+                       ? this->_type : rhs.getType();
+        int     prec = ( this->_precision > rhs.getPrecision() )
+                       ? this->_precision : rhs.getPrecision();
+        std::stringstream   stream;
 
+        if (_type <= INT32) {
+            long long   data = std::stoll( this->_line )
+                               - std::stoll( rhs.toString() );
+            if ( !is_size_ok( data ) )
+                throw OperandExp("Overflow!");
+            _value = static_cast<T>( data );
+            stream << std::setprecision( this->_precision ) << data;
+        }
+        else {
+            long double  data = std::stoll( this->_line )
+                                - std::stoll( rhs.toString() );
+            if ( !is_size_ok( data ) )
+                throw OperandExp("Overflow!");
+            _value = static_cast<T>( data );
+            stream << std::setprecision( this->_precision ) << data;
+        }
+        return ( factory.createOperand( type, stream.str() ));
     }
 
     IOperand const* operator*(IOperand const &rhs) const {
+        type    type = ( this->_type > rhs.getType() )
+                       ? this->_type : rhs.getType();
+        int     prec = ( this->_precision > rhs.getPrecision() )
+                       ? this->_precision : rhs.getPrecision();
+        std::stringstream   stream;
 
+        if (_type <= INT32) {
+            long long   data = std::stoll( this->_line )
+                               * std::stoll( rhs.toString() );
+            if ( !is_size_ok( data ) )
+                throw OperandExp("Overflow!");
+            _value = static_cast<T>( data );
+            stream << std::setprecision( this->_precision ) << data;
+        }
+        else {
+            long double  data = std::stoll( this->_line )
+                                * std::stoll( rhs.toString() );
+            if ( !is_size_ok( data ) )
+                throw OperandExp("Overflow!");
+            _value = static_cast<T>( data );
+            stream << std::setprecision( this->_precision ) << data;
+        }
+        return ( factory.createOperand( type, stream.str() ));
     }
 
     IOperand const* operator/(IOperand const &rhs) const {
+        type    type = ( this->_type > rhs.getType() )
+                       ? this->_type : rhs.getType();
+        int     prec = ( this->_precision > rhs.getPrecision() )
+                       ? this->_precision : rhs.getPrecision();
+        std::stringstream   stream;
 
+        if ( !std::stoll( rhs.toString() ) )
+            throw OperandExp("Overflow!");
+        if (_type <= INT32) {
+            long long   data = std::stoll( this->_line )
+                               / std::stoll( rhs.toString() );
+            if ( !is_size_ok( data ) )
+                throw OperandExp("Overflow!");
+            _value = static_cast<T>( data );
+            stream << std::setprecision( this->_precision ) << data;
+        }
+        else {
+            long double  data = std::stoll( this->_line )
+                                / std::stoll( rhs.toString() );
+            if ( !is_size_ok( data ) )
+                throw OperandExp("Overflow!");
+            _value = static_cast<T>( data );
+            stream << std::setprecision( this->_precision ) << data;
+        }
+        return ( factory.createOperand( type, stream.str() ));
     }
 
     IOperand const* operator%(IOperand const &rhs) const {
+        type    type = ( this->_type > rhs.getType() )
+                       ? this->_type : rhs.getType();
+        int     prec = ( this->_precision > rhs.getPrecision() )
+                       ? this->_precision : rhs.getPrecision();
+        std::stringstream   stream;
 
+        if ( !std::stoll( rhs.toString() ) )
+            throw OperandExp("Overflow!");
+        if (_type <= INT32) {
+            long long   data = std::stoll( this->_line )
+                               % std::stoll( rhs.toString() );
+            if ( !is_size_ok( data ) )
+                throw OperandExp("Overflow!");
+            _value = static_cast<T>( data );
+            stream << std::setprecision( this->_precision ) << data;
+        }
+        else {
+            long double  data = std::stoll( this->_line )
+                                % std::stoll( rhs.toString() );
+            if ( !is_size_ok( data ) )
+                throw OperandExp("Overflow!");
+            _value = static_cast<T>( data );
+            stream << std::setprecision( this->_precision ) << data;
+        }
+        return ( factory.createOperand( type, stream.str() ));
     }
 
     IOperand const * createOperand( type t, std::string const & value ) const {
@@ -91,7 +207,7 @@ public:
     }
 
     template <typename S>
-    bool    is_size_ok( S value ) {
+    bool    is_size_ok( S value ) const {
         if ( this->_type == INT8 ) {
             return ( SCHAR_MIN <= value && value <= SCHAR_MIN );
         }
