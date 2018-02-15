@@ -17,8 +17,6 @@ Parser::Parser(Parser const &rhs) {
 	*this = rhs;
 }
 
-Parser::Parser(std::list<lexeme> lexeme) : _lexemesList( lexeme ) {}
-
 void Parser::start() {
 	while ( !_lexemesList.empty() ) {
 		if ( _lexemesList.front().cmd == EXIT )
@@ -28,42 +26,47 @@ void Parser::start() {
 	throw ParserExp("The program doesn’t have an exit instruction!");
 }
 
-void    push() {
-
-}
-void    pop() {
-
+void Parser::set_list(std::list<lexeme> new_list) {
+    this->_lexemesList = new_list;
 }
 
-void    dump() {
+void    Parser::push() {
 
 }
 
-void    assert() {
+void    Parser::pop() {
 
 }
 
-void    add() {
+void    Parser::dump() {
 
 }
 
-void    sub() {
+void    Parser::assert() {
 
 }
 
-void    mul() {
+void    Parser::add() {
 
 }
 
-void    div() {
+void    Parser::sub() {
 
 }
 
-void    mod() {
+void    Parser::mul() {
 
 }
 
-void    print() {
+void    Parser::div() {
+
+}
+
+void    Parser::mod() {
+
+}
+
+void    Parser::print() {
 
 }
 

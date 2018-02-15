@@ -10,7 +10,7 @@ SOURCE =    src/main.cpp \
 
 OBJECTS = $(SOURCE:.cpp=.o)
 
-CC = clang++
+CC = g++ -std=c++11
 
 all: $(NAME) done
 

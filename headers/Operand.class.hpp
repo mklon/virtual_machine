@@ -14,6 +14,7 @@ private:
 	T           _value;
 	std::string _line;
 
+
     class OperandExp : public std::exception {
     private:
         std::string     _exptn_msg;
@@ -34,18 +35,18 @@ public:
 	Operand( Operand const &rhs ) {};
 
 	Operand( type t, std::string value, int precision )
-			: _type(t), _value(value), _precision(precision) {
+			: _type(t), _precision( precision ) {
 		std::stringstream   stream;
 		if (_type <= INT32) {
-			long long   data = std::stoll( this->_value );
-            if ( !is_size_ok() )
+			long long   data = std::stoll( value );
+            if ( !is_size_ok( data ) )
                 throw OperandExp("Overflow!");
 			_value = static_cast<T>( data );
 			stream << std::setprecision( this->_precision ) << data;
 		}
 		else {
-			long double  data = std::stold( this->_value );
-            if ( !is_size_ok() )
+			long double  data = std::stold( value );
+            if ( !is_size_ok( data ) )
                 throw OperandExp("Overflow!");
             _value = static_cast<T>( data );
 			stream << std::setprecision( this->_precision ) << data;
@@ -53,35 +54,35 @@ public:
         this->_line = stream.str();
 	}
 
-    int Operand::getPrecision() const {
+    int getPrecision() const {
         return ( this->_precision );
     }
 
-    type Operand::getType() const {
+    type getType() const {
         return ( this->_type );
     }
 
-    std::string const& Operand::toString() const {
+    std::string const& toString() const {
         return ( this->_line );
     }
 
-    IOperand const* Operand::operator+(IOperand const &rhs) const {
+    IOperand const* operator+(IOperand const &rhs) const {
 
     }
 
-    IOperand const* Operand::operator-(IOperand const &rhs) const {
+    IOperand const* operator-(IOperand const &rhs) const {
 
     }
 
-    IOperand const* Operand::operator*(IOperand const &rhs) const {
+    IOperand const* operator*(IOperand const &rhs) const {
 
     }
 
-    IOperand const* Operand::operator/(IOperand const &rhs) const {
+    IOperand const* operator/(IOperand const &rhs) const {
 
     }
 
-    IOperand const* Operand::operator%(IOperand const &rhs) const {
+    IOperand const* operator%(IOperand const &rhs) const {
 
     }
 
@@ -89,29 +90,29 @@ public:
 
     }
 
-    template <typename T>
-    bool    is_size_ok() {
+    template <typename S>
+    bool    is_size_ok( S value ) {
         if ( this->_type == INT8 ) {
-            return ( SCHAR_MIN <= this->_value && this->_value <= SCHAR_MIN );
+            return ( SCHAR_MIN <= value && value <= SCHAR_MIN );
         }
         else if ( this->_type == INT16 ) {
-            return ( SHRT_MIN <= this->_value && this->_value <= SHRT_MAX );
+            return ( SHRT_MIN <= value && value <= SHRT_MAX );
         }
         else if ( this->_type == INT32 ) {
-            return ( INT_MIN <= this->_value && this->_value <= INT_MAX );
+            return ( INT_MIN <= value && value <= INT_MAX );
         }
         else if ( this->_type == FLOAT ) {
-            return ( FLT_MIN <= this->_value && this->_value <= FLT_MAX );
+            return ( FLT_MIN <= value && value <= FLT_MAX );
         }
         else if ( this->_type == DOUBLE ) {
-            return ( DBL_MIN <= this->_value && this->_value <= DBL_MAX );
+            return ( DBL_MIN <= value && value <= DBL_MAX );
         }
         else
             return ( false );
     }
 
-	const Operand&  operator=( Operand const &rhs );
-	~Operand();
+	const Operand&  operator=( Operand const &rhs ) {};
+	~Operand() {};
 };
 
 #endif

@@ -6,11 +6,11 @@
 
 class   Parser {
 private:
-	std::list<IOperand*>	            _stack;
-	std::list<lexeme>		            _lexemesList;
-	std::map<int, void (Parser::*)()>   _command;
+	std::list<IOperand*>	            	_stack;
+	std::list<lexeme>		            	_lexemesList;
+	std::map<token, void (Parser::*)()>		_command;
 
-	class ParserExp : public std::exception {
+    class ParserExp : public std::exception {
 	private:
 		std::string		_exptn_msg;
 	public:
@@ -26,7 +26,7 @@ private:
 public:
 	Parser();
 	Parser( Parser const & rhs );
-	Parser( std::list<lexeme> lexeme );
+	//Parser( std::list<lexeme> lexeme );
 
 	void    start();
 
@@ -40,6 +40,8 @@ public:
     void    div();
     void    mod();
     void    print();
+
+    void    set_list( std::list<lexeme> new_list );
 
 	Parser  &operator=( Parser const & rhs );
 	~Parser();
