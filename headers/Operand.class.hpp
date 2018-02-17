@@ -6,6 +6,7 @@
 #include <iomanip>
 #include <climits>
 #include <cfloat>
+#include <cmath>
 
 template <typename T>
 class Operand : public IOperand {
@@ -75,19 +76,19 @@ public:
                        ? this->_precision : rhs.getPrecision();
         std::stringstream   stream;
 
-        if (_type <= INT32) {
+        if ( type <= INT32) {
             long long   data = std::stoll( this->_line )
                                + std::stoll( rhs.toString() );
             if ( !is_size_ok( data ) )
                 throw OperandExp("Overflow!");
-            stream << std::setprecision( this->_precision ) << data;
+            stream << std::setprecision( prec ) << data;
         }
         else {
-            long double  data = std::stoll( this->_line )
-                                + std::stoll( rhs.toString() );
+            long double  data = std::stold( this->_line )
+                                + std::stold( rhs.toString() );
             if ( !is_size_ok( data ) )
                 throw OperandExp("Overflow!");
-            stream << std::setprecision( this->_precision ) << data;
+            stream << std::setprecision( prec ) << data;
         }
         return ( factory.createOperand( type, stream.str() ));
 
@@ -100,19 +101,19 @@ public:
                        ? this->_precision : rhs.getPrecision();
         std::stringstream   stream;
 
-        if (_type <= INT32) {
+        if ( type <= INT32) {
             long long   data = std::stoll( this->_line )
                                - std::stoll( rhs.toString() );
             if ( !is_size_ok( data ) )
                 throw OperandExp("Overflow!");
-            stream << std::setprecision( this->_precision ) << data;
+            stream << std::setprecision( prec ) << data;
         }
         else {
-            long double  data = std::stoll( this->_line )
-                                - std::stoll( rhs.toString() );
+            long double  data = std::stold( this->_line )
+                                - std::stold( rhs.toString() );
             if ( !is_size_ok( data ) )
                 throw OperandExp("Overflow!");
-            stream << std::setprecision( this->_precision ) << data;
+            stream << std::setprecision( prec ) << data;
         }
         return ( factory.createOperand( type, stream.str() ));
     }
@@ -124,19 +125,19 @@ public:
                        ? this->_precision : rhs.getPrecision();
         std::stringstream   stream;
 
-        if (_type <= INT32) {
+        if ( type <= INT32) {
             long long   data = std::stoll( this->_line )
                                * std::stoll( rhs.toString() );
             if ( !is_size_ok( data ) )
                 throw OperandExp("Overflow!");
-            stream << std::setprecision( this->_precision ) << data;
+            stream << std::setprecision( prec ) << data;
         }
         else {
-            long double  data = std::stoll( this->_line )
-                                * std::stoll( rhs.toString() );
+            long double  data = std::stold( this->_line )
+                                * std::stold( rhs.toString() );
             if ( !is_size_ok( data ) )
                 throw OperandExp("Overflow!");
-            stream << std::setprecision( this->_precision ) << data;
+            stream << std::setprecision( prec ) << data;
         }
         return ( factory.createOperand( type, stream.str() ));
     }
@@ -149,20 +150,20 @@ public:
         std::stringstream   stream;
 
         if ( !std::stoll( rhs.toString() ) )
-            throw OperandExp("Overflow!");
-        if (_type <= INT32) {
+            throw OperandExp("Division by 0!");
+        if ( type <= INT32) {
             long long   data = std::stoll( this->_line )
                                / std::stoll( rhs.toString() );
             if ( !is_size_ok( data ) )
                 throw OperandExp("Overflow!");
-            stream << std::setprecision( this->_precision ) << data;
+            stream << std::setprecision( prec ) << data;
         }
         else {
-            long double  data = std::stoll( this->_line )
-                                / std::stoll( rhs.toString() );
+            long double  data = std::stold( this->_line )
+                                / std::stold( rhs.toString() );
             if ( !is_size_ok( data ) )
                 throw OperandExp("Overflow!");
-            stream << std::setprecision( this->_precision ) << data;
+            stream << std::setprecision( prec ) << data;
         }
         return ( factory.createOperand( type, stream.str() ));
     }
@@ -175,26 +176,22 @@ public:
         std::stringstream   stream;
 
         if ( !std::stoll( rhs.toString() ) )
-            throw OperandExp("Overflow!");
-        if (_type <= INT32) {
+            throw OperandExp("Mod by 0!");
+        if ( type <= INT32) {
             long long   data = std::stoll( this->_line )
                                % std::stoll( rhs.toString() );
             if ( !is_size_ok( data ) )
                 throw OperandExp("Overflow!");
-            stream << std::setprecision( this->_precision ) << data;
+            stream << std::setprecision( prec ) << data;
         }
         else {
-            long double  data = std::stoll( this->_line )
-                                % std::stoll( rhs.toString() );
+            long double  data = std::fmod(std::stoll( this->_line ),
+                                          std::stoll( rhs.toString() ));
             if ( !is_size_ok( data ) )
                 throw OperandExp("Overflow!");
-            stream << std::setprecision( this->_precision ) << data;
+            stream << std::setprecision( prec ) << data;
         }
         return ( factory.createOperand( type, stream.str() ));
-    }
-
-    IOperand const * createOperand( type t, std::string const & value ) const {
-
     }
 
     template <typename S>

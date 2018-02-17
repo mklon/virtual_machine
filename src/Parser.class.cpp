@@ -21,10 +21,10 @@ void Parser::start() {
 	while ( !_lexemesList.empty() ) {
 		if ( _lexemesList.front().cmd == EXIT )
 			return ;
-        lexeme l = _lexemesList.front();
-        lexeme l1 = _lexemesList.front();
+		lexeme l = _lexemesList.front();
+		lexeme l1 = _lexemesList.front();
 
-        (this->*_command.at( _lexemesList.front().cmd ))();
+		(this->*_command.at( _lexemesList.front().cmd ))();
 		_lexemesList.pop_front();
 	}
 	throw ParserExp("The program doesn’t have an exit instruction!");
@@ -39,29 +39,54 @@ void    Parser::push() {
 }
 
 void    Parser::pop() {
-    if ( _stack.empty() )
-        throw ParserExp( "Trying to pop empty stack!" );
-    _stack.pop_back();
+	if ( _stack.empty() )
+		throw ParserExp( "Trying to pop empty stack!" );
+	_stack.pop_back();
 }
 
 void    Parser::dump() {
-    if ( _stack.empty() )
-        throw ParserExp( "Trying to dump empty stack!" );
+	if ( _stack.empty() )
+		throw ParserExp( "Trying to dump empty stack!" );
 	std::list<const IOperand*>::iterator it = _stack.end();
-    while ( it-- != _stack.begin() )
-        std::cout << (*it)->toString() << "\n";
+	while ( it-- != _stack.begin() )
+		std::cout << (*it)->toString() << "\n";
 }
 
 void    Parser::assert() {
-	std::cout << "assert" << "\n";
+	if ( _stack.empty() )
+		throw ParserExp( "Trying to assert empty stack!" );
+	if ( _stack.back()->getType() != _lexemesList.front().data_type ||
+		_stack.back()->toString() != _lexemesList.front().value)
+        throw ParserExp( "The assert instruction was failed!" );
 }
 
 void    Parser::add() {
-	std::cout << "add" << "\n";
+    if ( _stack.size() < 2 )
+        throw ParserExp( "Too less values in the stack to add!" );
+    const IOperand* first = _stack.back();
+    _stack.pop_back();
+    const IOperand* second = _stack.back();
+    _stack.pop_back();
+    const IOperand* result = *first + *second;
+    _stack.push_back( result );
+    delete( first );
+    delete( second );
 }
 
 void    Parser::sub() {
-	std::cout << "sub" << "\n";
+    /*const IOperand* first;
+    const IOperand* second;
+    const IOperand* result;
+
+    *first = *_stack.back();
+    _stack.pop_back();
+    *second = *_stack.back();
+    _stack.pop_back();
+    result = *first - *second;
+    _stack.push_back( result );
+
+    delete( first );
+    delete( second );*/
 }
 
 void    Parser::mul() {
