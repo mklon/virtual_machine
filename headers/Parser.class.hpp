@@ -1,14 +1,16 @@
 #ifndef PARSER_CLASS_HPP
 # define PARSER_CLASS_HPP
 
-#include "includes.hpp"
+#include "Factory.class.hpp"
 #include "IOperand.class.hpp"
+#include <map>
 
 class   Parser {
 private:
-	std::list<IOperand*>	            	_stack;
+	std::list<const IOperand*>           	_stack;
 	std::list<lexeme>		            	_lexemesList;
 	std::map<token, void (Parser::*)()>		_command;
+    Factory                                 _create;
 
     class ParserExp : public std::exception {
 	private:
@@ -26,7 +28,6 @@ private:
 public:
 	Parser();
 	Parser( Parser const & rhs );
-	//Parser( std::list<lexeme> lexeme );
 
 	void    start();
 

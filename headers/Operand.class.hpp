@@ -4,7 +4,8 @@
 #include "IOperand.class.hpp"
 #include "includes.hpp"
 #include <iomanip>
-
+#include <climits>
+#include <cfloat>
 
 template <typename T>
 class Operand : public IOperand {
@@ -79,7 +80,6 @@ public:
                                + std::stoll( rhs.toString() );
             if ( !is_size_ok( data ) )
                 throw OperandExp("Overflow!");
-            _value = static_cast<T>( data );
             stream << std::setprecision( this->_precision ) << data;
         }
         else {
@@ -87,7 +87,6 @@ public:
                                 + std::stoll( rhs.toString() );
             if ( !is_size_ok( data ) )
                 throw OperandExp("Overflow!");
-            _value = static_cast<T>( data );
             stream << std::setprecision( this->_precision ) << data;
         }
         return ( factory.createOperand( type, stream.str() ));
@@ -106,7 +105,6 @@ public:
                                - std::stoll( rhs.toString() );
             if ( !is_size_ok( data ) )
                 throw OperandExp("Overflow!");
-            _value = static_cast<T>( data );
             stream << std::setprecision( this->_precision ) << data;
         }
         else {
@@ -114,7 +112,6 @@ public:
                                 - std::stoll( rhs.toString() );
             if ( !is_size_ok( data ) )
                 throw OperandExp("Overflow!");
-            _value = static_cast<T>( data );
             stream << std::setprecision( this->_precision ) << data;
         }
         return ( factory.createOperand( type, stream.str() ));
@@ -132,7 +129,6 @@ public:
                                * std::stoll( rhs.toString() );
             if ( !is_size_ok( data ) )
                 throw OperandExp("Overflow!");
-            _value = static_cast<T>( data );
             stream << std::setprecision( this->_precision ) << data;
         }
         else {
@@ -140,7 +136,6 @@ public:
                                 * std::stoll( rhs.toString() );
             if ( !is_size_ok( data ) )
                 throw OperandExp("Overflow!");
-            _value = static_cast<T>( data );
             stream << std::setprecision( this->_precision ) << data;
         }
         return ( factory.createOperand( type, stream.str() ));
@@ -160,7 +155,6 @@ public:
                                / std::stoll( rhs.toString() );
             if ( !is_size_ok( data ) )
                 throw OperandExp("Overflow!");
-            _value = static_cast<T>( data );
             stream << std::setprecision( this->_precision ) << data;
         }
         else {
@@ -168,7 +162,6 @@ public:
                                 / std::stoll( rhs.toString() );
             if ( !is_size_ok( data ) )
                 throw OperandExp("Overflow!");
-            _value = static_cast<T>( data );
             stream << std::setprecision( this->_precision ) << data;
         }
         return ( factory.createOperand( type, stream.str() ));
@@ -188,7 +181,6 @@ public:
                                % std::stoll( rhs.toString() );
             if ( !is_size_ok( data ) )
                 throw OperandExp("Overflow!");
-            _value = static_cast<T>( data );
             stream << std::setprecision( this->_precision ) << data;
         }
         else {
@@ -196,7 +188,6 @@ public:
                                 % std::stoll( rhs.toString() );
             if ( !is_size_ok( data ) )
                 throw OperandExp("Overflow!");
-            _value = static_cast<T>( data );
             stream << std::setprecision( this->_precision ) << data;
         }
         return ( factory.createOperand( type, stream.str() ));
@@ -209,7 +200,7 @@ public:
     template <typename S>
     bool    is_size_ok( S value ) const {
         if ( this->_type == INT8 ) {
-            return ( SCHAR_MIN <= value && value <= SCHAR_MIN );
+            return ( SCHAR_MIN <= value && value <= SCHAR_MAX );
         }
         else if ( this->_type == INT16 ) {
             return ( SHRT_MIN <= value && value <= SHRT_MAX );

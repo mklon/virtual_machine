@@ -1,12 +1,12 @@
 #ifndef FACTORY_CLASS_HPP
 # define FACTORY_CLASS_HPP
 
-#include "includes.hpp"
 #include "IOperand.class.hpp"
+#include <map>
 
 class   Factory {
 private:
-    std::map<type, IOperand const * ( Factory::* )( std::string const & value ) const>   _method;
+    std::map<int, IOperand const * ( Factory::* )( std::string const & value ) const>   _method;
 
     IOperand const* createInt8( std::string const & value ) const;
     IOperand const* createInt16( std::string const & value ) const;

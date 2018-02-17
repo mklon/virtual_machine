@@ -5,7 +5,11 @@
 #include <fstream>
 #include <string>
 #include <sstream>
-#include "../headers/Lexer.class.hpp"
+#include "Lexer.class.hpp"
+#include "Parser.class.hpp"
+#include "Factory.class.hpp"
+#include "IOperand.class.hpp"
+#include "Operand.class.hpp"
 #include <list>
 #include <map>
 #include <climits>

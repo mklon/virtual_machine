@@ -1,5 +1,4 @@
-#include "../headers/Factory.class.hpp"
-#include "../headers/Operand.class.hpp"
+#include "../headers/includes.hpp"
 
 Factory::Factory() {
 	_method[INT8] = &Factory::createInt8;
@@ -34,7 +33,7 @@ IOperand const* Factory::createDouble( std::string const &value ) const {
 }
 
 IOperand const* Factory::createOperand( type t, std::string const &value ) const {
-    return (( this->*_method.at( t ))( value ));
+    return ( ((this->*_method.at( (int)t ))( value )) );
 }
 
 Factory&        Factory::operator=( Factory const &rhs ) {
