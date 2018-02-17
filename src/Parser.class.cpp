@@ -74,35 +74,63 @@ void    Parser::add() {
 }
 
 void    Parser::sub() {
-    /*const IOperand* first;
-    const IOperand* second;
-    const IOperand* result;
-
-    *first = *_stack.back();
+    if ( _stack.size() < 2 )
+        throw ParserExp( "Too less values in the stack to add!" );
+    const IOperand* first = _stack.back();
     _stack.pop_back();
-    *second = *_stack.back();
+    const IOperand* second = _stack.back();
     _stack.pop_back();
-    result = *first - *second;
+    const IOperand* result = *first - *second;
     _stack.push_back( result );
-
     delete( first );
-    delete( second );*/
+    delete( second );
 }
 
 void    Parser::mul() {
-	std::cout << "mull" << "\n";
+    if ( _stack.size() < 2 )
+        throw ParserExp( "Too less values in the stack to add!" );
+    const IOperand* first = _stack.back();
+    _stack.pop_back();
+    const IOperand* second = _stack.back();
+    _stack.pop_back();
+    const IOperand* result = *first * *second;
+    _stack.push_back( result );
+    delete( first );
+    delete( second );
 }
 
 void    Parser::div() {
-	std::cout << "div" << "\n";
+    if ( _stack.size() < 2 )
+        throw ParserExp( "Too less values in the stack to add!" );
+    const IOperand* first = _stack.back();
+    _stack.pop_back();
+    const IOperand* second = _stack.back();
+    _stack.pop_back();
+    const IOperand* result = *first / *second;
+    _stack.push_back( result );
+    delete( first );
+    delete( second );
 }
 
 void    Parser::mod() {
-	std::cout << "mod" << "\n";
+    if ( _stack.size() < 2 )
+        throw ParserExp( "Too less values in the stack to add!" );
+    const IOperand* first = _stack.back();
+    _stack.pop_back();
+    const IOperand* second = _stack.back();
+    _stack.pop_back();
+    const IOperand* result = *first % *second;
+    _stack.push_back( result );
+    delete( first );
+    delete( second );
 }
 
 void    Parser::print() {
-	std::cout << "print" << "\n";
+    if ( _stack.empty() )
+        throw ParserExp( "Trying to prints empty stack!" );
+	if ( _stack.back()->getType() != INT8 )
+        throw ParserExp( "Wrong type for print!" );
+    std::cout << static_cast<char>( std::stoi(_stack.back()->toString()) ) << "\n";
 }
 
 Parser& Parser::operator=(Parser const &rhs) {
