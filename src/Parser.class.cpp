@@ -63,66 +63,61 @@ void    Parser::assert() {
 void    Parser::add() {
     if ( _stack.size() < 2 )
         throw ParserExp( "Too less values in the stack to add!" );
-    const IOperand* first = _stack.back();
+
+    std::list<const IOperand*>::iterator    it = _stack.end();
+
+    const IOperand* result = *_stack.back() + **(--(--it));
     _stack.pop_back();
-    const IOperand* second = _stack.back();
     _stack.pop_back();
-    const IOperand* result = *first + *second;
     _stack.push_back( result );
-    delete( first );
-    delete( second );
 }
 
 void    Parser::sub() {
     if ( _stack.size() < 2 )
-        throw ParserExp( "Too less values in the stack to add!" );
-    const IOperand* first = _stack.back();
+        throw ParserExp( "Too less values in the stack to sub!" );
+
+    std::list<const IOperand*>::iterator    it = _stack.end();
+
+    const IOperand* result = *_stack.back() - **(--(--it));
     _stack.pop_back();
-    const IOperand* second = _stack.back();
     _stack.pop_back();
-    const IOperand* result = *first - *second;
     _stack.push_back( result );
-    delete( first );
-    delete( second );
 }
 
 void    Parser::mul() {
     if ( _stack.size() < 2 )
-        throw ParserExp( "Too less values in the stack to add!" );
-    const IOperand* first = _stack.back();
+        throw ParserExp( "Too less values in the stack to mul!" );
+
+    std::list<const IOperand*>::iterator    it = _stack.end();
+
+    const IOperand* result = *_stack.back() * **(--(--it));
     _stack.pop_back();
-    const IOperand* second = _stack.back();
     _stack.pop_back();
-    const IOperand* result = *first * *second;
     _stack.push_back( result );
-    delete( first );
-    delete( second );
 }
 
 void    Parser::div() {
     if ( _stack.size() < 2 )
-        throw ParserExp( "Too less values in the stack to add!" );
-    const IOperand* first = _stack.back();
+        throw ParserExp( "Too less values in the stack to div!" );
+
+    std::list<const IOperand*>::iterator    it = _stack.end();
+
+    const IOperand* result = *_stack.back() / **(--(--it));
     _stack.pop_back();
-    const IOperand* second = _stack.back();
     _stack.pop_back();
-    const IOperand* result = *first / *second;
     _stack.push_back( result );
-    delete( first );
-    delete( second );
 }
 
 void    Parser::mod() {
     if ( _stack.size() < 2 )
-        throw ParserExp( "Too less values in the stack to add!" );
-    const IOperand* first = _stack.back();
+        throw ParserExp( "Too less values in the stack to mod!" );
+
+    std::list<const IOperand*>::iterator    it = _stack.end();
+
+    const IOperand* result = *_stack.back() % **(--(--it));
     _stack.pop_back();
-    const IOperand* second = _stack.back();
     _stack.pop_back();
-    const IOperand* result = *first % *second;
     _stack.push_back( result );
-    delete( first );
-    delete( second );
 }
 
 void    Parser::print() {

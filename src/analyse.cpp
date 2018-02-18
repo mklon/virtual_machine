@@ -26,16 +26,16 @@ std::list<std::string>	split_string( std::string line ) {
 void	file( Lexer &lexer ) {
 	std::string line;
 	while ( std::getline( *lexer.get_file(), line ))
-		create_lexeme( split_string( line ), lexer);
+		create_lexeme( split_string( line ), lexer );
 }
 
 void	std_input( Lexer &lexer ) {
 	std::string line;
-	while ( true) {
+	while ( true ) {
 		std::getline( std::cin, line );
 		if ( line == ";;" )
 			break ;
-		create_lexeme( split_string( line ), lexer);
+		create_lexeme( split_string( line ), lexer );
 	}
 }
 

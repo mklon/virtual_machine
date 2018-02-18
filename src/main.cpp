@@ -7,7 +7,6 @@ int		main( int argc, char* argv[] ) {
 		Parser	parser;
 		parser.set_list( lexer.get_list() );
 		parser.start();
-		std::cout << "Miracle!" << "\n";
 	}
 	catch ( std::exception & e ) {
 		std::cout << e.what() << std::endl;
