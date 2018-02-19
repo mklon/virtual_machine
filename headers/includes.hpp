@@ -27,8 +27,8 @@ std::list<std::string>	split_string( std::string line );
 
 // lexeme.cpp
 void                    create_lexeme( std::list<std::string> substr, Lexer &lexer );
-type		            data_type( std::string &data, Lexer &lexer );
-std::string             value( std::string &line, Lexer &lexer, type l_type );
+type		            data_type( std::string &data, Lexer &lexer, lexeme *lex );
+std::string             value( std::string &line, Lexer &lexer, type l_type, lexeme *lex );
 
 
 #endif

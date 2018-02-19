@@ -42,14 +42,14 @@ public:
 		std::stringstream   stream;
 		if (_type <= INT32) {
 			long long   data = std::stoll( value );
-            if ( !is_size_ok( data ) )
+            if ( !is_size_ok( data, t ) )
                 throw OperandExp("Overflow!");
 			_value = static_cast<T>( data );
 			stream << std::setprecision( this->_precision ) << data;
 		}
 		else {
 			long double  data = std::stold( value );
-            if ( !is_size_ok( data ) )
+            if ( !is_size_ok( data, t ) )
                 throw OperandExp("Overflow!");
             _value = static_cast<T>( data );
 			stream << std::setprecision( this->_precision ) << data;
@@ -79,14 +79,14 @@ public:
         if ( type <= INT32) {
             long long   data = std::stoll( this->_line )
                                + std::stoll( rhs.toString() );
-            if ( !is_size_ok( data ) )
+            if ( !is_size_ok( data, type ) )
                 throw OperandExp("Overflow!");
             stream << std::setprecision( prec ) << data;
         }
         else {
             long double  data = std::stold( this->_line )
                                 + std::stold( rhs.toString() );
-            if ( !is_size_ok( data ) )
+            if ( !is_size_ok( data, type ) )
                 throw OperandExp("Overflow!");
             stream << std::setprecision( prec ) << data;
         }
@@ -104,14 +104,14 @@ public:
         if ( type <= INT32) {
             long long   data = std::stoll( this->_line )
                                - std::stoll( rhs.toString() );
-            if ( !is_size_ok( data ) )
+            if ( !is_size_ok( data, type ) )
                 throw OperandExp("Overflow!");
             stream << std::setprecision( prec ) << data;
         }
         else {
             long double  data = std::stold( this->_line )
                                 - std::stold( rhs.toString() );
-            if ( !is_size_ok( data ) )
+            if ( !is_size_ok( data, type ) )
                 throw OperandExp("Overflow!");
             stream << std::setprecision( prec ) << data;
         }
@@ -128,14 +128,14 @@ public:
         if ( type <= INT32) {
             long long   data = std::stoll( this->_line )
                                * std::stoll( rhs.toString() );
-            if ( !is_size_ok( data ) )
+            if ( !is_size_ok( data, type ) )
                 throw OperandExp("Overflow!");
             stream << std::setprecision( prec ) << data;
         }
         else {
             long double  data = std::stold( this->_line )
                                 * std::stold( rhs.toString() );
-            if ( !is_size_ok( data ) )
+            if ( !is_size_ok( data, type ) )
                 throw OperandExp("Overflow!");
             stream << std::setprecision( prec ) << data;
         }
@@ -154,14 +154,14 @@ public:
         if ( type <= INT32) {
             long long   data = std::stoll( this->_line )
                                / std::stoll( rhs.toString() );
-            if ( !is_size_ok( data ) )
+            if ( !is_size_ok( data, type ) )
                 throw OperandExp("Overflow!");
             stream << std::setprecision( prec ) << data;
         }
         else {
             long double  data = std::stold( this->_line )
                                 / std::stold( rhs.toString() );
-            if ( !is_size_ok( data ) )
+            if ( !is_size_ok( data, type ) )
                 throw OperandExp("Overflow!");
             stream << std::setprecision( prec ) << data;
         }
@@ -180,14 +180,14 @@ public:
         if ( type <= INT32) {
             long long   data = std::stoll( this->_line )
                                % std::stoll( rhs.toString() );
-            if ( !is_size_ok( data ) )
+            if ( !is_size_ok( data, type ) )
                 throw OperandExp("Overflow!");
             stream << std::setprecision( prec ) << data;
         }
         else {
             long double  data = std::fmod(std::stoll( this->_line ),
                                           std::stoll( rhs.toString() ));
-            if ( !is_size_ok( data ) )
+            if ( !is_size_ok( data, type ) )
                 throw OperandExp("Overflow!");
             stream << std::setprecision( prec ) << data;
         }
@@ -195,21 +195,21 @@ public:
     }
 
     template <typename S>
-    bool    is_size_ok( S value ) const {
-        if ( this->_type == INT8 ) {
+    bool    is_size_ok( S value, type t ) const {
+        if ( t == INT8 ) {
             return ( SCHAR_MIN <= value && value <= SCHAR_MAX );
         }
-        else if ( this->_type == INT16 ) {
+        else if ( t == INT16 ) {
             return ( SHRT_MIN <= value && value <= SHRT_MAX );
         }
-        else if ( this->_type == INT32 ) {
+        else if ( t == INT32 ) {
             return ( INT_MIN <= value && value <= INT_MAX );
         }
-        else if ( this->_type == FLOAT ) {
-            return ( FLT_MIN <= value && value <= FLT_MAX );
+        else if ( t == FLOAT ) {
+            return ( -FLT_MAX <= value && value <= FLT_MAX );
         }
-        else if ( this->_type == DOUBLE ) {
-            return ( DBL_MIN <= value && value <= DBL_MAX );
+        else if ( t == DOUBLE ) {
+            return ( -DBL_MAX <= value && value <= DBL_MAX );
         }
         else
             return ( false );

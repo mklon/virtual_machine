@@ -1,4 +1,4 @@
-#include "../headers/includes.hpp"
+ #include "../headers/includes.hpp"
 
 Parser::Parser() {
 	_command[PUSH] = &Parser::push;
@@ -41,7 +41,11 @@ void    Parser::push() {
 void    Parser::pop() {
 	if ( _stack.empty() )
 		throw ParserExp( "Trying to pop empty stack!" );
+	const IOperand* next;
+
+	next = _stack.back();
 	_stack.pop_back();
+	delete next;
 }
 
 void    Parser::dump() {
@@ -67,8 +71,14 @@ void    Parser::add() {
     std::list<const IOperand*>::iterator    it = _stack.end();
 
     const IOperand* result = *_stack.back() + **(--(--it));
-    _stack.pop_back();
-    _stack.pop_back();
+	const IOperand* next;
+
+	next = _stack.back();
+	_stack.pop_back();
+	delete next;
+	next = _stack.back();
+	_stack.pop_back();
+	delete next;
     _stack.push_back( result );
 }
 
@@ -79,8 +89,14 @@ void    Parser::sub() {
     std::list<const IOperand*>::iterator    it = _stack.end();
 
     const IOperand* result = *_stack.back() - **(--(--it));
-    _stack.pop_back();
-    _stack.pop_back();
+	const IOperand* next;
+
+	next = _stack.back();
+	_stack.pop_back();
+	delete next;
+	next = _stack.back();
+	_stack.pop_back();
+	delete next;
     _stack.push_back( result );
 }
 
@@ -91,8 +107,14 @@ void    Parser::mul() {
     std::list<const IOperand*>::iterator    it = _stack.end();
 
     const IOperand* result = *_stack.back() * **(--(--it));
+	const IOperand* next;
+
+	next = _stack.back();
     _stack.pop_back();
-    _stack.pop_back();
+	delete next;
+	next = _stack.back();
+	_stack.pop_back();
+	delete next;
     _stack.push_back( result );
 }
 
@@ -103,8 +125,14 @@ void    Parser::div() {
     std::list<const IOperand*>::iterator    it = _stack.end();
 
     const IOperand* result = *_stack.back() / **(--(--it));
-    _stack.pop_back();
-    _stack.pop_back();
+	const IOperand* next;
+
+	next = _stack.back();
+	_stack.pop_back();
+	delete next;
+	next = _stack.back();
+	_stack.pop_back();
+	delete next;
     _stack.push_back( result );
 }
 
@@ -115,8 +143,14 @@ void    Parser::mod() {
     std::list<const IOperand*>::iterator    it = _stack.end();
 
     const IOperand* result = *_stack.back() % **(--(--it));
-    _stack.pop_back();
-    _stack.pop_back();
+	const IOperand* next;
+
+	next = _stack.back();
+	_stack.pop_back();
+	delete next;
+	next = _stack.back();
+	_stack.pop_back();
+	delete next;
     _stack.push_back( result );
 }
 
@@ -133,7 +167,17 @@ Parser& Parser::operator=(Parser const &rhs) {
 	return ( *this );
 }
 
-Parser::~Parser() {}
+Parser::~Parser() {
+
+	const IOperand* next;
+
+	while ( !_stack.empty() ) {
+		next = _stack.back();
+		_stack.pop_back();
+		delete next;
+	}
+
+}
 
 
 
