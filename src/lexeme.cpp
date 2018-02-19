@@ -2,12 +2,12 @@
 
 void		err_val( Lexer &lexer, lexeme *lex ) {
 	delete lex;
-	lexer.exception( "Invalid value" );
+	lexer.exception( "Invalid value!" );
 }
 
 void		err( Lexer &lexer, lexeme *lex ) {
 	delete lex;
-	lexer.exception( "Invalid command" );
+	lexer.exception( "Invalid command!" );
 }
 
 std::string	value( std::string &line, Lexer &lexer, type l_type, lexeme *lex ) {
