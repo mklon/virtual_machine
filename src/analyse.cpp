@@ -1,13 +1,14 @@
 #include "../headers/includes.hpp"
 
 void    error( std::list<std::string> e_list, Lexer &lexer ) {
-    int     num = e_list.size();
+	unsigned int	num = e_list.size();
 
-    while ( !e_list.empty() ) {
-        std::cout << e_list.front() << "\n";
-        e_list.pop_front();
-    }
-    lexer.exception( std::to_string( num ) + " errors were generated!" );
+	while ( !e_list.empty() ) {
+		std::cout << e_list.front() << "\n";
+		e_list.pop_front();
+	}
+	lexer.exception( "\n  " + std::to_string( num ) +
+	" \033[;31merrors\033[33;0m were generated!" );
 }
 
 std::list<std::string>	split_string( std::string line ) {
@@ -35,23 +36,24 @@ std::list<std::string>	split_string( std::string line ) {
 
 void	file( Lexer &lexer ) {
 	std::string line;
-    int                     num = 0;
-    std::list<std::string>  error_list;
+	int                     num = 0;
+	std::list<std::string>  error_list;
 
 	while ( std::getline( *lexer.get_file(), line )) {
-        num++;
+		num++;
 		try {
 			create_lexeme(split_string(line), lexer);
 		}
 		catch ( std::exception &e ) {
-            std::string name;
+			std::string name;
 
-            name = "Line " + std::to_string( num ) +": " + e.what();
-            error_list.push_back( name );
+			name = "\033[;32mLine " + std::to_string( num )
+				   + ":\033[33;0m \t" + e.what();
+			error_list.push_back( name );
 		}
 	}
-    if ( !error_list.empty() )
-        error( error_list, lexer );
+	if ( !error_list.empty() )
+		error( error_list, lexer );
 }
 
 void	std_input( Lexer &lexer ) {
@@ -70,12 +72,13 @@ void	std_input( Lexer &lexer ) {
 		catch ( std::exception &e ) {
 			std::string name;
 
-            name = "Line " + std::to_string( num ) +": \t" + e.what();
-            error_list.push_back( name );
+			name = "\033[;32mLine " + std::to_string( num )
+				   + ":\033[33;0m \t" + e.what();
+			error_list.push_back( name );
 		}
 	}
-    if ( !error_list.empty() )
-        error( error_list, lexer );
+	if ( !error_list.empty() )
+		error( error_list, lexer );
 }
 
 int     begin( Lexer &lexer ) {

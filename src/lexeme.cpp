@@ -24,8 +24,8 @@ std::string	value( std::string &line, Lexer &lexer, type l_type, lexeme *lex ) {
 			err_val( lexer, lex );
 	if ( line.find( '+', 1 ) != std::string::npos ||
 		 line.find( '-', 1 ) != std::string::npos ||
-         line == "-." || line == "+." || line == "."
-         || line == "+" || line == "-" )
+		 line == "-." || line == "+." || line == "."
+		 || line == "+" || line == "-" )
 		err_val( lexer, lex );
 	unsigned long int	i;
 	if ( l_type == FLOAT || l_type == DOUBLE )

@@ -7,8 +7,8 @@
 #include <list>
 
 enum	type {
-    NON = 0,
-    INT8,
+	NON = 0,
+	INT8,
 	INT16,
 	INT32,
 	FLOAT,
@@ -16,17 +16,17 @@ enum	type {
 };
 
 enum    token {
-    EXIT = 0,
-    PUSH,
-    POP,
-    DUMP,
-    ASSERT,
-    ADD,
-    SUB,
-    MUL,
-    DIV,
-    MOD,
-    PRINT
+	EXIT = 0,
+	PUSH,
+	POP,
+	DUMP,
+	ASSERT,
+	ADD,
+	SUB,
+	MUL,
+	DIV,
+	MOD,
+	PRINT
 };
 
 struct  lexeme {
@@ -37,32 +37,32 @@ struct  lexeme {
 
 class   Lexer {
 private:
-    class LexerExp : public std::exception {
-    private:
-        std::string     _exptn_msg;
-    public:
-        LexerExp();
-        LexerExp( const std::string & text );
-        LexerExp( LexerExp const & rhs );
+	class LexerExp : public std::exception {
+	private:
+		std::string     _exptn_msg;
+	public:
+		LexerExp();
+		LexerExp( const std::string & text );
+		LexerExp( LexerExp const & rhs );
 
-        LexerExp &	operator=( LexerExp const & rhs );
+		LexerExp &	operator=( LexerExp const & rhs );
 
-        virtual const   char *what() const throw();
-        virtual ~LexerExp() throw();
-    };
-    std::ifstream       *_file;
-    std::list<lexeme>   _lexemesList;
+		virtual const   char *what() const throw();
+		virtual ~LexerExp() throw();
+	};
+	std::ifstream       *_file;
+	std::list<lexeme>   _lexemesList;
 public:
 	Lexer();
 	Lexer( Lexer const & rhs );
 
 	std::ifstream	    *get_file();
-    std::list<lexeme>   &get_list();
+	std::list<lexeme>   &get_list();
 
-    Lexer( int argc, char *argv[] );
+	Lexer( int argc, char *argv[] );
 	Lexer &	operator=( Lexer const & rhs );
 
-    void		exception( std::string line );
+	void		exception( std::string line );
 	void		add_lexeme( lexeme &new_lex );
 
 	~Lexer();

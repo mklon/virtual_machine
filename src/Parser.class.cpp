@@ -18,17 +18,17 @@ Parser::Parser(Parser const &rhs) {
 }
 
 void Parser::start() {
-    bool    flag = true;
-    std::list<lexeme>::iterator it = _lexemesList.end();
-    while ( it-- != _lexemesList.begin() )
-        if ( (*it).cmd == EXIT ) {
-            flag = false;
-            break ;
-        }
-    if ( flag )
-        throw ParserExp("The program doesn’t have an exit instruction!");
+	bool    flag = true;
+	std::list<lexeme>::iterator it = _lexemesList.end();
+	while ( it-- != _lexemesList.begin() )
+		if ( (*it).cmd == EXIT ) {
+			flag = false;
+			break ;
+		}
+	if ( flag )
+		throw ParserExp("The program doesn’t have an exit instruction!");
 
-    while ( !_lexemesList.empty() ) {
+	while ( !_lexemesList.empty() ) {
 		if ( _lexemesList.front().cmd == EXIT )
 			return ;
 		lexeme l = _lexemesList.front();
@@ -70,16 +70,16 @@ void    Parser::assert() {
 		throw ParserExp( "Trying to assert empty stack!" );
 	if ( _stack.back()->getType() != _lexemesList.front().data_type ||
 		_stack.back()->toString() != _lexemesList.front().value)
-        throw ParserExp( "The assert instruction was failed!" );
+		throw ParserExp( "The assert instruction was failed!" );
 }
 
 void    Parser::add() {
-    if ( _stack.size() < 2 )
-        throw ParserExp( "Too less values in the stack to add!" );
+	if ( _stack.size() < 2 )
+		throw ParserExp( "Too less values in the stack to add!" );
 
-    std::list<const IOperand*>::iterator    it = _stack.end();
+	std::list<const IOperand*>::iterator    it = _stack.end();
 
-    const IOperand* result = *_stack.back() + **(--(--it));
+	const IOperand* result = *_stack.back() + **(--(--it));
 	const IOperand* next;
 
 	next = _stack.back();
@@ -88,16 +88,16 @@ void    Parser::add() {
 	next = _stack.back();
 	_stack.pop_back();
 	delete next;
-    _stack.push_back( result );
+	_stack.push_back( result );
 }
 
 void    Parser::sub() {
-    if ( _stack.size() < 2 )
-        throw ParserExp( "Too less values in the stack to sub!" );
+	if ( _stack.size() < 2 )
+		throw ParserExp( "Too less values in the stack to sub!" );
 
-    std::list<const IOperand*>::iterator    it = _stack.end();
+	std::list<const IOperand*>::iterator    it = _stack.end();
 
-    const IOperand* result = *_stack.back() - **(--(--it));
+	const IOperand* result = *_stack.back() - **(--(--it));
 	const IOperand* next;
 
 	next = _stack.back();
@@ -106,34 +106,34 @@ void    Parser::sub() {
 	next = _stack.back();
 	_stack.pop_back();
 	delete next;
-    _stack.push_back( result );
+	_stack.push_back( result );
 }
 
 void    Parser::mul() {
-    if ( _stack.size() < 2 )
-        throw ParserExp( "Too less values in the stack to mul!" );
+	if ( _stack.size() < 2 )
+		throw ParserExp( "Too less values in the stack to mul!" );
 
-    std::list<const IOperand*>::iterator    it = _stack.end();
+	std::list<const IOperand*>::iterator    it = _stack.end();
 
-    const IOperand* result = *_stack.back() * **(--(--it));
+	const IOperand* result = *_stack.back() * **(--(--it));
 	const IOperand* next;
 
 	next = _stack.back();
-    _stack.pop_back();
+	_stack.pop_back();
 	delete next;
 	next = _stack.back();
 	_stack.pop_back();
 	delete next;
-    _stack.push_back( result );
+	_stack.push_back( result );
 }
 
 void    Parser::div() {
-    if ( _stack.size() < 2 )
-        throw ParserExp( "Too less values in the stack to div!" );
+	if ( _stack.size() < 2 )
+		throw ParserExp( "Too less values in the stack to div!" );
 
-    std::list<const IOperand*>::iterator    it = _stack.end();
+	std::list<const IOperand*>::iterator    it = _stack.end();
 
-    const IOperand* result = *_stack.back() / **(--(--it));
+	const IOperand* result = *_stack.back() / **(--(--it));
 	const IOperand* next;
 
 	next = _stack.back();
@@ -142,16 +142,16 @@ void    Parser::div() {
 	next = _stack.back();
 	_stack.pop_back();
 	delete next;
-    _stack.push_back( result );
+	_stack.push_back( result );
 }
 
 void    Parser::mod() {
-    if ( _stack.size() < 2 )
-        throw ParserExp( "Too less values in the stack to mod!" );
+	if ( _stack.size() < 2 )
+		throw ParserExp( "Too less values in the stack to mod!" );
 
-    std::list<const IOperand*>::iterator    it = _stack.end();
+	std::list<const IOperand*>::iterator    it = _stack.end();
 
-    const IOperand* result = *_stack.back() % **(--(--it));
+	const IOperand* result = *_stack.back() % **(--(--it));
 	const IOperand* next;
 
 	next = _stack.back();
@@ -160,22 +160,22 @@ void    Parser::mod() {
 	next = _stack.back();
 	_stack.pop_back();
 	delete next;
-    _stack.push_back( result );
+	_stack.push_back( result );
 }
 
 void    Parser::print() {
-    if ( _stack.empty() )
-        throw ParserExp( "Trying to prints empty stack!" );
+	if ( _stack.empty() )
+		throw ParserExp( "Trying to prints empty stack!" );
 	if ( _stack.back()->getType() != INT8 )
-        throw ParserExp( "Wrong type for print!" );
-    std::cout << static_cast<char>( std::stoi(_stack.back()->toString()) ) << "\n";
+		throw ParserExp( "Wrong type for print!" );
+	std::cout << static_cast<char>( std::stoi(_stack.back()->toString()) ) << "\n";
 }
 
 Parser& Parser::operator=(Parser const &rhs) {
 	this->_lexemesList = rhs._lexemesList;
-    this->_stack = rhs._stack;
-    this->_create = rhs._create;
-    this->_command = rhs._command;
+	this->_stack = rhs._stack;
+	this->_create = rhs._create;
+	this->_command = rhs._command;
 	return ( *this );
 }
 
@@ -202,7 +202,7 @@ Parser::ParserExp::ParserExp( const std::string & text ) {
 }
 
 Parser::ParserExp::ParserExp( ParserExp const &rhs ) {
-    *this = rhs;
+	*this = rhs;
 }
 
 const   char* Parser::ParserExp::what() const throw() {
@@ -210,8 +210,8 @@ const   char* Parser::ParserExp::what() const throw() {
 }
 
 Parser::ParserExp& Parser::ParserExp::operator=(ParserExp const &rhs) {
-    this->_exptn_msg = rhs._exptn_msg;
-    return ( *this );
+	this->_exptn_msg = rhs._exptn_msg;
+	return ( *this );
 }
 
 Parser::ParserExp::~ParserExp() throw() {}

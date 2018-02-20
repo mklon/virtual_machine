@@ -10,9 +10,9 @@ private:
 	std::list<const IOperand*>           	_stack;
 	std::list<lexeme>		            	_lexemesList;
 	std::map<token, void (Parser::*)()>		_command;
-    Factory                                 _create;
+	Factory                                 _create;
 
-    class ParserExp : public std::exception {
+	class ParserExp : public std::exception {
 	private:
 		std::string		_exptn_msg;
 	public:
@@ -31,18 +31,18 @@ public:
 
 	void    start();
 
-    void    push();
-    void    pop();
-    void    dump();
-    void    assert();
-    void    add();
-    void    sub();
-    void    mul();
-    void    div();
-    void    mod();
-    void    print();
+	void    push();
+	void    pop();
+	void    dump();
+	void    assert();
+	void    add();
+	void    sub();
+	void    mul();
+	void    div();
+	void    mod();
+	void    print();
 
-    void    set_list( std::list<lexeme> new_list );
+	void    set_list( std::list<lexeme> new_list );
 
 	Parser  &operator=( Parser const & rhs );
 	~Parser();
