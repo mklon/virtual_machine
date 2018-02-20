@@ -4,13 +4,13 @@ Lexer::Lexer() {}
 
 Lexer::Lexer( int argc, char **argv ) {
     if ( argc > 2 )
-        throw ( LexerExp( "Lexer: too many arguments!" ));
+        throw ( LexerExp( "Too many arguments!" ));
     else if ( argc == 2 ) {
         std::ifstream *file = new std::ifstream;
         this->_file = file;
 		this->_file->open(argv[1], std::ios_base::in);
 		if ( !_file->is_open() )
-			throw ( LexerExp( "Lexer: invalid file!" ));
+			throw ( LexerExp( "Invalid file!" ));
     }
     else
         this->_file = NULL;
@@ -21,7 +21,8 @@ Lexer::Lexer( Lexer const &rhs ) {
 }
 
 Lexer				&Lexer::operator=( Lexer const &rhs ) {
-
+    this->_lexemesList = rhs._lexemesList;
+    this->_file = rhs._file;
     return (*this);
 }
 

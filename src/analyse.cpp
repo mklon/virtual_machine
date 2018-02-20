@@ -1,5 +1,15 @@
 #include "../headers/includes.hpp"
 
+void    error( std::list<std::string> e_list, Lexer &lexer ) {
+    int     num = e_list.size();
+
+    while ( !e_list.empty() ) {
+        std::cout << e_list.front() << "\n";
+        e_list.pop_front();
+    }
+    lexer.exception( std::to_string( num ) + " errors were generated!" );
+}
+
 std::list<std::string>	split_string( std::string line ) {
 	std::string 			subs;
 	std::istringstream 		iss( line );
@@ -25,18 +35,45 @@ std::list<std::string>	split_string( std::string line ) {
 
 void	file( Lexer &lexer ) {
 	std::string line;
-	while ( std::getline( *lexer.get_file(), line ))
-		create_lexeme( split_string( line ), lexer );
+    int                     num = 0;
+    std::list<std::string>  error_list;
+
+	while ( std::getline( *lexer.get_file(), line )) {
+        num++;
+		try {
+			create_lexeme(split_string(line), lexer);
+		}
+		catch ( std::exception &e ) {
+            std::string name;
+
+            name = "Line " + std::to_string( num ) +": " + e.what();
+            error_list.push_back( name );
+		}
+	}
 }
 
 void	std_input( Lexer &lexer ) {
 	std::string line;
+	int                     num = 0;
+	std::list<std::string>  error_list;
+
 	while ( true ) {
-		std::getline( std::cin, line );
-		if ( line == ";;" )
-			break ;
-		create_lexeme( split_string( line ), lexer );
+		try {
+			std::getline(std::cin, line);
+			num++;
+			if (line == ";;")
+				break;
+			create_lexeme(split_string(line), lexer);
+		}
+		catch ( std::exception &e ) {
+			std::string name;
+
+            name = "Line " + std::to_string( num ) +": " + e.what();
+            error_list.push_back( name );
+		}
 	}
+    if ( !error_list.empty() )
+        error( error_list, lexer );
 }
 
 int     begin( Lexer &lexer ) {

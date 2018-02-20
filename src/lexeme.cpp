@@ -15,6 +15,8 @@ std::string	value( std::string &line, Lexer &lexer, type l_type, lexeme *lex ) {
 		err_val( lexer, lex );
 	line.erase( 0, 1);
 	line.erase( line.size() - 1, 1);
+	if ( line.empty() )
+		err_val( lexer, lex );
 	if ( line.find_first_not_of( "+-.0123456789" ) != std::string::npos )
 		err_val( lexer, lex );
 	if ( l_type == INT8 || l_type == INT16 || l_type == INT32 )
