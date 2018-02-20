@@ -172,7 +172,10 @@ void    Parser::print() {
 }
 
 Parser& Parser::operator=(Parser const &rhs) {
-	//!!!!!!!!
+	this->_lexemesList = rhs._lexemesList;
+    this->_stack = rhs._stack;
+    this->_create = rhs._create;
+    this->_command = rhs._command;
 	return ( *this );
 }
 
@@ -198,8 +201,17 @@ Parser::ParserExp::ParserExp( const std::string & text ) {
 	this->_exptn_msg = text;
 }
 
+Parser::ParserExp::ParserExp( ParserExp const &rhs ) {
+    *this = rhs;
+}
+
 const   char* Parser::ParserExp::what() const throw() {
 	return ( this->_exptn_msg.c_str() );
+}
+
+Parser::ParserExp& Parser::ParserExp::operator=(ParserExp const &rhs) {
+    this->_exptn_msg = rhs._exptn_msg;
+    return ( *this );
 }
 
 Parser::ParserExp::~ParserExp() throw() {}

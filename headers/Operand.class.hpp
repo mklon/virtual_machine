@@ -24,9 +24,14 @@ private:
     public:
         OperandExp() {};
         OperandExp( const std::string & text ) : _exptn_msg( text ) {};
-        OperandExp( OperandExp const & rhs ) {};
+        OperandExp( OperandExp const & rhs ) {
+            *this = rhs;
+        };
 
-        OperandExp &	operator=( OperandExp const & rhs ) {};
+        OperandExp &	operator=( OperandExp const & rhs ) {
+            this->_exptn_msg = rhs._exptn_msg;
+            return ( *this );
+        };
 
         virtual const   char *what() const throw() {
             return ( _exptn_msg.c_str() );

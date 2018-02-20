@@ -14,7 +14,7 @@ std::string	value( std::string &line, Lexer &lexer, type l_type, lexeme *lex ) {
 	if ( line[0] != '(' || line[line.size() - 1] != ')')
 		err_val( lexer, lex );
 	line.erase( 0, 1);
-	line.erase( line.size() - 1, 1);
+	line.erase( line.size() - 1, 1  );
 	if ( line.empty() )
 		err_val( lexer, lex );
 	if ( line.find_first_not_of( "+-.0123456789" ) != std::string::npos )
@@ -24,7 +24,8 @@ std::string	value( std::string &line, Lexer &lexer, type l_type, lexeme *lex ) {
 			err_val( lexer, lex );
 	if ( line.find( '+', 1 ) != std::string::npos ||
 		 line.find( '-', 1 ) != std::string::npos ||
-		 line[0] == '.')
+         line == "-." || line == "+." || line == "."
+         || line == "+" || line == "-" )
 		err_val( lexer, lex );
 	unsigned long int	i;
 	if ( l_type == FLOAT || l_type == DOUBLE )

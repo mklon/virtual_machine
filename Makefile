@@ -1,4 +1,3 @@
-
 NAME = avm
 
 SOURCE =    src/main.cpp \
@@ -10,7 +9,9 @@ SOURCE =    src/main.cpp \
 
 OBJECTS = $(SOURCE:.cpp=.o)
 
-CC = g++ -std=c++11
+CC = g++
+
+FL = -Wall -Wextra -Werror -std=c++11
 
 all: $(NAME) done
 

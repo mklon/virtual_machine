@@ -53,8 +53,17 @@ Lexer::LexerExp::LexerExp( const std::string & text ) {
     this->_exptn_msg = text;
 }
 
+Lexer::LexerExp::LexerExp(LexerExp const &rhs) {
+    *this = rhs;
+}
+
 const   char* Lexer::LexerExp::what() const throw() {
     return ( this->_exptn_msg.c_str() );
+}
+
+Lexer::LexerExp& Lexer::LexerExp::operator=(LexerExp const &rhs) {
+    this->_exptn_msg = rhs._exptn_msg;
+    return ( *this );
 }
 
 Lexer::LexerExp::~LexerExp() throw() {}

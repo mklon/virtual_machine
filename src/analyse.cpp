@@ -70,7 +70,7 @@ void	std_input( Lexer &lexer ) {
 		catch ( std::exception &e ) {
 			std::string name;
 
-            name = "Line " + std::to_string( num ) +": " + e.what();
+            name = "Line " + std::to_string( num ) +": \t" + e.what();
             error_list.push_back( name );
 		}
 	}
