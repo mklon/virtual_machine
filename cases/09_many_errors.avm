@@ -1,0 +1,20 @@
+;09_many_errors.avm
+
+puhs int8(85)
+push int32(.05)
+dqwer
+pop
+pop
+dump
+;adfdsgs
+;afgsgsd
+add
+asser INT32(568)
+55
+51
+
+
+
+424242
+
+exit

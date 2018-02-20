@@ -50,6 +50,8 @@ void	file( Lexer &lexer ) {
             error_list.push_back( name );
 		}
 	}
+    if ( !error_list.empty() )
+        error( error_list, lexer );
 }
 
 void	std_input( Lexer &lexer ) {

@@ -18,7 +18,17 @@ Parser::Parser(Parser const &rhs) {
 }
 
 void Parser::start() {
-	while ( !_lexemesList.empty() ) {
+    bool    flag = true;
+    std::list<lexeme>::iterator it = _lexemesList.end();
+    while ( it-- != _lexemesList.begin() )
+        if ( (*it).cmd == EXIT ) {
+            flag = false;
+            break ;
+        }
+    if ( flag )
+        throw ParserExp("The program doesn’t have an exit instruction!");
+
+    while ( !_lexemesList.empty() ) {
 		if ( _lexemesList.front().cmd == EXIT )
 			return ;
 		lexeme l = _lexemesList.front();
@@ -27,7 +37,6 @@ void Parser::start() {
 		(this->*_command.at( _lexemesList.front().cmd ))();
 		_lexemesList.pop_front();
 	}
-	throw ParserExp("The program doesn’t have an exit instruction!");
 }
 
 void Parser::set_list( std::list<lexeme> new_list ) {
