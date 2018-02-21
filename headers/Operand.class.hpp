@@ -40,7 +40,9 @@ private:
 	};
 public:
 	Operand() {};
-	Operand( Operand const &rhs ) {};
+	Operand( Operand const &rhs ) {
+		*this = rhs;
+	};
 
 	Operand( type t, std::string value, int precision )
 			: _type(t), _precision( precision ) {
@@ -220,7 +222,14 @@ public:
 			return ( false );
 	}
 
-	const Operand&  operator=( Operand const &rhs ) {};
+	const Operand&  operator=( Operand const &rhs ) {
+		this->_line = rhs._line;
+		this->_precision = rhs._precision;
+		this->_type = rhs._type;
+		this->_value = rhs._value;
+		this->factory = rhs.factory;
+		return ( *this );
+	};
 	~Operand() {};
 };
 

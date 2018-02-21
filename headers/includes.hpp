@@ -34,7 +34,8 @@ type		            data_type( std::string &data, Lexer &lexer,
                                    lexeme *lex );
 std::string             value( std::string &line, Lexer &lexer,
                                type l_type, lexeme *lex );
-void		            err( Lexer &lexer, lexeme *lex );
-void        		    err_val( Lexer &lexer, lexeme *lex );
+void		            err( Lexer &lexer, lexeme *lex, int number );
+template <typename S>
+bool    				is_size_ok( S value, type t );
 
 #endif

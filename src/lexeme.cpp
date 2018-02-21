@@ -1,37 +1,70 @@
 #include "../headers/includes.hpp"
 
-void		err_val( Lexer &lexer, lexeme *lex ) {
+void		err( Lexer &lexer, lexeme *lex, int number ) {
 	delete lex;
-	lexer.exception( "Invalid value!" );
+	if ( number == 1 )
+		lexer.exception( "Invalid command!" );
+	else if ( number == 2 )
+		lexer.exception( "Invalid value!" );
+	else if ( number == 3 )
+		lexer.exception( "Data type overflow!" );
+	else
+		lexer.exception( "Invalid type!" );
 }
 
-void		err( Lexer &lexer, lexeme *lex ) {
-	delete lex;
-	lexer.exception( "Invalid command!" );
+template <typename S>
+bool    is_size_ok( S value, type t ) {
+	if ( t == INT8 ) {
+		return ( SCHAR_MIN <= value && value <= SCHAR_MAX );
+	}
+	else if ( t == INT16 ) {
+		return ( SHRT_MIN <= value && value <= SHRT_MAX );
+	}
+	else if ( t == INT32 ) {
+		return ( INT_MIN <= value && value <= INT_MAX );
+	}
+	else if ( t == FLOAT ) {
+		return ( -FLT_MAX <= value && value <= FLT_MAX );
+	}
+	else if ( t == DOUBLE ) {
+		return ( -DBL_MAX <= value && value <= DBL_MAX );
+	}
+	else
+		return ( false );
 }
 
 std::string	value( std::string &line, Lexer &lexer, type l_type, lexeme *lex ) {
 	if ( line[0] != '(' || line[line.size() - 1] != ')')
-		err_val( lexer, lex );
+		err( lexer, lex, 2 );
 	line.erase( 0, 1);
 	line.erase( line.size() - 1, 1  );
 	if ( line.empty() )
-		err_val( lexer, lex );
+		err( lexer, lex, 2 );
 	if ( line.find_first_not_of( "+-.0123456789" ) != std::string::npos )
-		err_val( lexer, lex );
+		err( lexer, lex, 2 );
 	if ( l_type == INT8 || l_type == INT16 || l_type == INT32 )
 		if ( line.find( '.' ) != std::string::npos )
-			err_val( lexer, lex );
+			err( lexer, lex, 2 );
 	if ( line.find( '+', 1 ) != std::string::npos ||
 		 line.find( '-', 1 ) != std::string::npos ||
 		 line == "-." || line == "+." || line == "."
 		 || line == "+" || line == "-" )
-		err_val( lexer, lex );
+		err( lexer, lex, 2 );
 	unsigned long int	i;
 	if ( l_type == FLOAT || l_type == DOUBLE )
 		if (( i = line.find( '.' )) != std::string::npos
 			&& line.find('.', i + 1) != std::string::npos)
-			err_val( lexer, lex );
+			err( lexer, lex, 2 );
+	if ( lex->data_type <= INT32) {
+		long long   data = std::stoll( line );
+		if ( !is_size_ok( data, lex->data_type ) )
+			err( lexer, lex, 3);
+	}
+	else {
+		long double  data = std::stold( line );
+		if ( !is_size_ok( data, lex->data_type ) )
+			err( lexer, lex, 3);
+	}
 	return ( line );
 }
 
@@ -56,10 +89,8 @@ type		data_type( std::string &data, Lexer &lexer, lexeme *lex ) {
 		data.erase( 0, 6 );
 		return ( DOUBLE );
 	}
-	else {
-		delete lex;
-		lexer.exception( "Wrong type!" );
-	}
+	else
+		err( lexer, lex, 4 );
 	return ( NON );
 }
 
@@ -79,7 +110,7 @@ void		create_lexeme( std::list<std::string> substr, Lexer &lexer ) {
 			lex->cmd = ASSERT;
 		}
 		else
-			err( lexer, lex );
+			err( lexer, lex, 1 );
 		line = substr.front();
 		lex->data_type = data_type( line, lexer, lex );
 		lex->value = value( line , lexer, lex->data_type, lex );
@@ -115,14 +146,14 @@ void		create_lexeme( std::list<std::string> substr, Lexer &lexer ) {
 			lex->cmd = EXIT;
 		}
 		else
-			err( lexer, lex );
+			err( lexer, lex, 1 );
 	}
 	else if (  substr.size() == 0 ) {
 		delete lex;
 		return ;
 	}
 	else
-		err( lexer, lex );
+		err( lexer, lex, 1 );
 	lexer.add_lexeme( *lex );
 	delete lex;
 }
