@@ -7,7 +7,7 @@ void		err( Lexer &lexer, lexeme *lex, int number ) {
 	else if ( number == 2 )
 		lexer.exception( "Invalid value!" );
 	else if ( number == 3 )
-		lexer.exception( "Data type overflow!" );
+		lexer.exception( "Data type overflow or underflows!" );
 	else
 		lexer.exception( "Invalid type!" );
 }
